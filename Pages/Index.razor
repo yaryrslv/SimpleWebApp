@@ -1,7 +1,19 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+
+<AuthorizeView>
+    <Authorized>
+
+        
+
+    </Authorized>
+    <NotAuthorized>
+        <h1>Привет, покупатель!</h1>
+        <p>Пожалуйста, войди, или зарегистрируйся.</p>
+
+
+      
+    </NotAuthorized>
+</AuthorizeView>

@@ -91,16 +91,19 @@ using SimpleWebApp.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 17 "C:\Users\Anonymous\Desktop\SimpleWebApp\Pages\Index.razor"
+#line 9 "C:\Users\Anonymous\Desktop\SimpleWebApp\Pages\Index.razor"
               
-            public List<string> list = new List<string>();
 
-            public void Fuck()
+
+            public static Dictionary<string, int> Products = new Dictionary<string, int>();
+
+            public string Name { get; set; }
+            public int Cost { get; set; }
+
+            public void Add(string Name, int Cost)
             {
-                object anus = "Anus";
-                list.Add("anus");
+                Products.Add(Name, Cost);
             }
-
         
 
 #line default

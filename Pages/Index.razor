@@ -6,14 +6,70 @@
 <AuthorizeView>
     <Authorized>
 
-        
+        @code{
+
+
+            public static Dictionary<string, int> Products = new Dictionary<string, int>();
+
+            public string Name { get; set; }
+            public int Cost { get; set; }
+
+            public void Add(string Name, int Cost)
+            {
+                Products.Add(Name, Cost);
+            }
+        }
+
+        <form>
+            <div class="form-group col-md-6">
+                <label for="productName">Название товара</label>
+                <input type="name" class="form-control" id="productName1" placeholder="Товар" @bind="Name">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="productCost">Цена товара</label>
+                <input type="cost" class="form-control" id="productCost1" placeholder="0" @bind="Cost">
+            </div>
+            <button type="submit" class="btn btn-primary" @onclick="()=> Add(Name, Cost)">Добавить товар</button>
+        </form>
+
+        <br>
+
+        <div class="form-group col-md-8">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                        int Id = 0;
+                        foreach (var item in Products)
+                        {
+                            <tr>
+                                <th scope="row">@Id</th>
+                                <td>@item.Key</td>
+                                <td>@item.Value</td>
+                            </tr>
+                            Id += 1;
+                        }
+                    }
+                    <tr class="table-active">
+                        <th scope="row">#</th>
+                        <td>Общая цена:</td>
+                        <td>@Products.Values.Sum()</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
 
     </Authorized>
     <NotAuthorized>
         <h1>Привет, покупатель!</h1>
         <p>Пожалуйста, войди, или зарегистрируйся.</p>
-
-
-      
     </NotAuthorized>
 </AuthorizeView>

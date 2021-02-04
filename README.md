@@ -3,7 +3,7 @@
 EntityFramework and Identity used.
 
 - Add ConnectionString for Identity to AppSettings file.
-- Create Database and Table:
+- Create Database and Table in your MS SQL Server:
 ```sql
 CREATE TABLE %YourTableName% (
     TotalId INT,

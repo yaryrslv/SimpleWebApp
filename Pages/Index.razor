@@ -24,33 +24,40 @@
 
         }
 
+
         <form>
-            <div class="form-group col-md-6">
-                <label for="productName">Название товара</label>
-                <input type="name" class="form-control" id="productName1" placeholder="Товар" @bind="Name">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="productCost">Цена товара</label>
-                <input type="cost" class="form-control" id="productCost1" placeholder="0" @bind="Cost">
-            </div>
-            <button type="submit" class="btn btn-primary" @onclick="() => bc.Insert(CurrentUserName, Name, Cost)">Добавить товар</button>
+            <div class="form-row">
+                <div class="col">
+                    <form>
+                        <div class="form-group col-md-8">
+                            <label for="productName">Название товара</label>
+                            <input type="name" class="form-control" id="productName1" placeholder="Товар" @bind="Name">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="productCost">Цена товара</label>
+                            <input type="cost" class="form-control" id="productCost1" placeholder="0" @bind="Cost">
+                        </div>
+                        <button type="submit" class="btn btn-primary" @onclick="() => bc.Insert(CurrentUserName, Name, Cost)">Добавить товар</button>
 
-            <div class="form-group col-md-6">
-                <label for="productName">Номер заказа</label>
-                <input type="id" class="form-control" id="totalId" placeholder="Товар" @bind="TotalId">
+                    </form>
+                </div>
+                <div class="col">
+                    <form>
+                        <div class="form-group col-md-8">
+                            <label for="productName">Номер заказа</label>
+                            <input type="id" class="form-control" id="totalId" placeholder="Товар" @bind="TotalId">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="productName">Новая цена</label>
+                            <input type="cost" class="form-control" id="updatedCost" placeholder="Товар" @bind="UpdatedCost">
+                        </div>
+                        <button type="submit" class="btn btn-primary" @onclick="() => bc.Delete(TotalId, CurrentUserName)">Удалить товар</button>
+                        <button type="submit" class="btn btn-primary" @onclick="() => bc.Update(TotalId, CurrentUserName, UpdatedCost)">Изменить цену</button>
+                    </form>
+                </div>
             </div>
-            <div class="form-group col-md-6">
-                <label for="productName">Новая цена</label>
-                <input type="cost" class="form-control" id="updatedCost" placeholder="Товар" @bind="UpdatedCost">
-            </div>
-            <button type="submit" class="btn btn-primary" @onclick="() => bc.Delete(TotalId, CurrentUserName)">Удалить товар</button>
-            <button type="submit" class="btn btn-primary" @onclick="() => bc.Update(TotalId, CurrentUserName, UpdatedCost)">Изменить цену</button>
-            @*<button type="submit" class="btn btn-primary" @onclick="()=> Remove(Name)">Удалить товар по имени</button>
-        <button type="submit" class="btn btn-primary" @onclick="()=> ChangeCost(Name, Cost)">Изменить цену товара по имени</button>*@
         </form>
-
         <br>
-
         <div class="form-group col-md-8">
             <table class="table table-sm">
                 <thead>
@@ -72,11 +79,11 @@
                             </tr>
                         }
                     }
-                <tr class="table-active">
-                    <th scope="row">Общая цена:</th>
-                    <td></td>
-                    <td>@bc.Select(CurrentUserName).Sum(i => i.Cost)</td>
-                </tr>
+                    <tr class="table-active">
+                        <th scope="row">Общая цена:</th>
+                        <td></td>
+                        <td>@bc.Select(CurrentUserName).Sum(i => i.Cost)</td>
+                    </tr>
 
                 </tbody>
             </table>

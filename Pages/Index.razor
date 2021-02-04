@@ -1,6 +1,6 @@
 ﻿@page "/"
-
-
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
 
 
 <AuthorizeView>
@@ -8,52 +8,61 @@
 
         @code{
 
+            public static string CurrentUserName;
 
-            public static Dictionary<string, int> Products = new Dictionary<string, int>();
+            protected override async Task OnInitializedAsync()
+            {
+                CurrentUserName = httpContextAccessor.HttpContext.User.Identity.Name;
+            }
 
             public string Name { get; set; }
             public int Cost { get; set; }
+            public int TotalId { get; set; }
+            public int UpdatedCost { get; set; }
 
-            public bool ErrorFlag { get; set; } = false;
+            BasketCore bc = new BasketCore();
 
-            public void Add(string Name, int Cost)
-            {
-                Products.Add(Name, Cost);
-            }
-            public void Remove(string Name)
-            {
-                Products.Remove(Name);
-            }
-            public void ChangeCost(string Name, int NewCost)
-            {
-                if (Products.Keys.Contains(Name))
-                {
-                    Products[Name] = NewCost;
-                }
-            }
         }
 
+
         <form>
-            <div class="form-group col-md-6">
-                <label for="productName">Название товара</label>
-                <input type="name" class="form-control" id="productName1" placeholder="Товар" @bind="Name">
+            <div class="form-row">
+                <div class="col">
+                    <form>
+                        <div class="form-group col-md-8">
+                            <label for="productName">Название товара</label>
+                            <input type="name" class="form-control" id="productName1" placeholder="Товар" @bind="Name">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="productCost">Цена товара</label>
+                            <input type="cost" class="form-control" id="productCost1" placeholder="0" @bind="Cost">
+                        </div>
+                        <button type="submit" class="btn btn-primary" @onclick="() => bc.Insert(CurrentUserName, Name, Cost)">Добавить товар</button>
+
+                    </form>
+                </div>
+                <div class="col">
+                    <form>
+                        <div class="form-group col-md-8">
+                            <label for="productName">Номер заказа</label>
+                            <input type="id" class="form-control" id="totalId" placeholder="Товар" @bind="TotalId">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="productName">Новая цена</label>
+                            <input type="cost" class="form-control" id="updatedCost" placeholder="Товар" @bind="UpdatedCost">
+                        </div>
+                        <button type="submit" class="btn btn-primary" @onclick="() => bc.Delete(TotalId, CurrentUserName)">Удалить товар</button>
+                        <button type="submit" class="btn btn-primary" @onclick="() => bc.Update(TotalId, CurrentUserName, UpdatedCost)">Изменить цену</button>
+                    </form>
+                </div>
             </div>
-            <div class="form-group col-md-6">
-                <label for="productCost">Цена товара</label>
-                <input type="cost" class="form-control" id="productCost1" placeholder="0" @bind="Cost">
-            </div>
-            <button type="submit" class="btn btn-primary" @onclick="()=> Add(Name, Cost)">Добавить товар</button>
-            <button type="submit" class="btn btn-primary" @onclick="()=> Remove(Name)">Удалить товар по имени</button>
-            <button type="submit" class="btn btn-primary" @onclick="()=> ChangeCost(Name, Cost)">Изменить цену товара по имени</button>
         </form>
-
         <br>
-
         <div class="form-group col-md-8">
             <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">Номер заказа</th>
                         <th scope="col">Название</th>
                         <th scope="col">Цена</th>
                     </tr>
@@ -61,21 +70,19 @@
                 <tbody>
 
                     @{
-                        int Id = 0;
-                        foreach (var item in Products)
+                        foreach (var item in bc.Select(CurrentUserName))
                         {
                             <tr>
-                                <th scope="row">@Id</th>
-                                <td>@item.Key</td>
-                                <td>@item.Value</td>
+                                <th scope="row">@item.TotalId</th>
+                                <td>@item.Name</td>
+                                <td>@item.Cost</td>
                             </tr>
-                            Id += 1;
                         }
                     }
                     <tr class="table-active">
-                        <th scope="row">#</th>
-                        <td>Общая цена:</td>
-                        <td>@Products.Values.Sum()</td>
+                        <th scope="row">Общая цена:</th>
+                        <td></td>
+                        <td>@bc.Select(CurrentUserName).Sum(i => i.Cost)</td>
                     </tr>
 
                 </tbody>

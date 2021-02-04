@@ -14,9 +14,22 @@
             public string Name { get; set; }
             public int Cost { get; set; }
 
+            public bool ErrorFlag { get; set; } = false;
+
             public void Add(string Name, int Cost)
             {
                 Products.Add(Name, Cost);
+            }
+            public void Remove(string Name)
+            {
+                Products.Remove(Name);
+            }
+            public void ChangeCost(string Name, int NewCost)
+            {
+                if (Products.Keys.Contains(Name))
+                {
+                    Products[Name] = NewCost;
+                }
             }
         }
 
@@ -30,6 +43,8 @@
                 <input type="cost" class="form-control" id="productCost1" placeholder="0" @bind="Cost">
             </div>
             <button type="submit" class="btn btn-primary" @onclick="()=> Add(Name, Cost)">Добавить товар</button>
+            <button type="submit" class="btn btn-primary" @onclick="()=> Remove(Name)">Удалить товар по имени</button>
+            <button type="submit" class="btn btn-primary" @onclick="()=> ChangeCost(Name, Cost)">Изменить цену товара по имени</button>
         </form>
 
         <br>

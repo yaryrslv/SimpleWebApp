@@ -49,8 +49,7 @@ namespace SimpleWebApp.Areas.Identity.Pages.Account
 
             // In our UI email and user name are one and the same, so when we update the email
             // we need to update the user name.
-            var set
-                Result = await _userManager.SetUserNameAsync(user, email);
+            var setUserNameResult = await _userManager.SetUserNameAsync(user, email);
             if (!setUserNameResult.Succeeded)
             {
                 StatusMessage = "Error changing user name.";

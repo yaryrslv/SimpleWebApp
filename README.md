@@ -2,7 +2,7 @@
 
 EntityFramework and Identity used.
 
-- Add ConnectionString for Identity to AppSettings file.
+- Add ConnectionString for Identity to <strong>AppSettings</strong> file.
 - Create Database and Table in your MS SQL Server:
 ```sql
 CREATE TABLE %YourTableName% (
@@ -12,6 +12,6 @@ CREATE TABLE %YourTableName% (
     Cost INT
 );
 ```
-- Set your serverName, databaseName and salesTableName in BasketStore class.
+- Set your serverName, databaseName and salesTableName in <strong>BasketStore</strong> class.
 - Deploy and run.
 

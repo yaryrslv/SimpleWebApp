@@ -5,7 +5,7 @@ EntityFramework and Identity used.
 - Add ConnectionString for Identity to AppSettings file.
 - Create Database and Table:
 ```sql
-CREATE TABLE %YourTableName (
+CREATE TABLE %YourTableName% (
     TotalId INT,
     UserName NVARCHAR(88),
     Name NVARCHAR(88),

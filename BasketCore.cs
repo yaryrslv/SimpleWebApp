@@ -51,7 +51,19 @@ namespace SimpleWebApp
             }
         }
 
-        public List<BasketItem> Get(string CurrentUserName)
+        public void Update(int TotalId, string UserName, int UpdatedCost)
+        {
+            string sqlInsert = "UPDATE " + salesTableName + " SET Cost = " + UpdatedCost + " WHERE TotalId = "
+                + TotalId + " AND UserName = '" + UserName + "'";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(sqlInsert, connection);
+                int number = command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+        public List<BasketItem> Select(string CurrentUserName)
         {
             List<BasketItem> UserBasket = new List<BasketItem>();
             string sqlInsert = "SELECT * FROM " + salesTableName + " WHERE UserName = '" + CurrentUserName + "'";

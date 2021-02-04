@@ -18,6 +18,7 @@
             public string Name { get; set; }
             public int Cost { get; set; }
             public int TotalId { get; set; }
+            public int UpdatedCost { get; set; }
 
             BasketCore bc = new BasketCore();
 
@@ -38,7 +39,12 @@
                 <label for="productName">Номер заказа</label>
                 <input type="id" class="form-control" id="totalId" placeholder="Товар" @bind="TotalId">
             </div>
+            <div class="form-group col-md-6">
+                <label for="productName">Новая цена</label>
+                <input type="cost" class="form-control" id="updatedCost" placeholder="Товар" @bind="UpdatedCost">
+            </div>
             <button type="submit" class="btn btn-primary" @onclick="() => bc.Delete(TotalId, CurrentUserName)">Удалить товар</button>
+            <button type="submit" class="btn btn-primary" @onclick="() => bc.Update(TotalId, CurrentUserName, UpdatedCost)">Изменить цену</button>
             @*<button type="submit" class="btn btn-primary" @onclick="()=> Remove(Name)">Удалить товар по имени</button>
         <button type="submit" class="btn btn-primary" @onclick="()=> ChangeCost(Name, Cost)">Изменить цену товара по имени</button>*@
         </form>
@@ -57,7 +63,7 @@
                 <tbody>
 
                     @{
-                        foreach (var item in bc.Get(CurrentUserName))
+                        foreach (var item in bc.Select(CurrentUserName))
                         {
                             <tr>
                                 <th scope="row">@item.TotalId</th>
@@ -69,7 +75,7 @@
                 <tr class="table-active">
                     <th scope="row">Общая цена:</th>
                     <td></td>
-                    <td>@bc.Get(CurrentUserName).Sum(i => i.Cost)</td>
+                    <td>@bc.Select(CurrentUserName).Sum(i => i.Cost)</td>
                 </tr>
 
                 </tbody>
